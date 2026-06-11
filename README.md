@@ -25,7 +25,7 @@ It knows the healthy lifecycle (*grill → PRD → issues → prototype → tdd 
 npx skills@latest add mattpocock/skills
 
 # 2. Add this router
-npx skills@latest add <your-username>/call-matt
+npx skills@latest add KoukkuAi/call-matt
 # or copy skills/call-matt/ into .claude/skills/ (per project)
 # or into ~/.claude/skills/ (available in every project)
 
