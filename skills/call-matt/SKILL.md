@@ -5,7 +5,7 @@ description: Orchestrator and router for Matt Pocock's open-source agent skills 
 
 # /call-matt — Skill Router & Strategic Coach
 
-An orchestrator for the skills in [mattpocock/skills](https://github.com/mattpocock/skills) (MIT-licensed). Instead of the user memorizing 14+ skills and guessing which one fits, this skill diagnoses where they are in the development lifecycle and routes them to the right tool. This is an unofficial community router: coach in the spirit of the toolkit, speaking as yourself — don't imply Matt Pocock's endorsement.
+An orchestrator for the skills in [mattpocock/skills](https://github.com/mattpocock/skills) (MIT-licensed). The toolkit has ~18 small, composable skills across three categories. Instead of the user memorizing them all and guessing which fits, this skill diagnoses where they are in the development lifecycle and routes them to the right tool. This is an unofficial community router: coach in the spirit of the toolkit, speaking as yourself — don't imply Matt Pocock's endorsement.
 
 ## Coaching Voice
 
@@ -45,6 +45,17 @@ These are the actual skills in the repo. Route only to skills that exist.
 | `/handoff` | The session's context is bloated or work must move to a fresh agent; compact everything into a handoff doc. |
 | `/write-a-skill` | The user wants to create a new, properly structured skill. |
 
+### Misc
+
+Niche tools — route to the first two when relevant; the last two are specific to Matt's own stack, so only mention them if the user is clearly in that context.
+
+| Skill | Use when |
+|---|---|
+| `/git-guardrails-claude-code` | The user worries the agent will run a destructive git command (push, `reset --hard`, `clean`); installs Claude Code hooks to block them. |
+| `/setup-pre-commit` | The user wants lint, format, type-check, and tests to run automatically on commit (Husky + lint-staged). |
+| `/migrate-to-shoehorn` | Migrating test files from `as` assertions to `@total-typescript/shoehorn`. Niche. |
+| `/scaffold-exercises` | Creating exercise directory structures (sections, problems, solutions). Niche, course-authoring only. |
+
 ## Routing Logic
 
 Work top-down. The first matching state wins; mention a runner-up only if it's a genuinely close call.
@@ -56,10 +67,11 @@ Work top-down. The first matching state wins; mention a runner-up only if it's a
 5. **Open design question, two+ plausible approaches** → `/prototype` before committing.
 6. **Ready to build (feature or fix whose cause is understood)** → `/tdd`.
 7. **Mystery bug or perf regression** → `/diagnose` (not `/tdd` — diagnosis first, regression test comes at the end of the loop).
-8. **Working but messy / hard to change** → `/improve-codebase-architecture`.
-9. **Lost in unfamiliar code** → `/zoom-out`.
+8. **Lost — doesn't understand the code (even their own)** → `/zoom-out` first. "Scared to touch it" usually means *don't understand it*, not *it's messy*. Understanding precedes refactoring.
+9. **Understands the code, but it's a ball of mud / hard to change** → `/improve-codebase-architecture`. If the user is both lost *and* it's messy, sequence them: `/zoom-out` → `/improve-codebase-architecture`.
 10. **Context bloated, tokens burning, or switching agents** → `/handoff` to move, `/caveman` to stay and compress.
-11. **Wants to build their own skill** → `/write-a-skill`.
+11. **Afraid the agent will wreck the git history** → `/git-guardrails-claude-code`. **Wants commit-time checks** → `/setup-pre-commit`.
+12. **Wants to build their own skill** → `/write-a-skill`.
 
 **Sequencing rule:** the healthy lifecycle is *grill → PRD → issues → (prototype) → tdd → improve-architecture*, with `/handoff` between long sessions. When a user skips a stage (e.g., wants `/tdd` on a half-baked idea), name the skipped stage and recommend it first — but if they insist, respect the call and route where they asked.
 
@@ -75,6 +87,6 @@ Keep the whole response under ~150 words unless the user asks for depth. A route
 
 ## Edge Cases
 
-- **The requested skill doesn't exist** (e.g., user asks for `/teach`): say so, and route to the nearest real skill or suggest `/write-a-skill` to build it.
+- **The requested skill doesn't exist** (e.g., user asks for `/teach` or `/refactor`, which aren't in the repo): say so plainly, then route to the nearest real skill or suggest `/write-a-skill` to build it. Never invent a skill name.
 - **The problem is outside the toolkit** (e.g., devops incident, legal question): say the toolkit doesn't cover it and help normally — don't force a skill onto everything.
 - **User asks "what can you do?"**: list the toolkit grouped as above, one line per skill, with the lifecycle sequence at the end.

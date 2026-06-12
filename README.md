@@ -6,7 +6,7 @@
 
 ## The problem
 
-Matt's toolkit has 14+ excellent skills — `/grill-with-docs`, `/tdd`, `/to-issues`, `/diagnose`, `/caveman` and more. They're small and composable by design. But that means *you* have to know which one fits your current situation.
+Matt's toolkit has ~18 excellent skills — `/grill-with-docs`, `/tdd`, `/to-issues`, `/diagnose`, `/caveman` and more. They're small and composable by design. But that means *you* have to know which one fits your current situation.
 
 ## The fix
 
@@ -57,6 +57,8 @@ npx skills@latest add KoukkuAi/call-matt
 | Lost in code | `/zoom-out` |
 | Bloated context | `/handoff` · `/caveman` |
 | New skill needed | `/write-a-skill` |
+| Git safety | `/git-guardrails-claude-code` |
+| Commit-time checks | `/setup-pre-commit` |
 
 ## A note on identity
 
