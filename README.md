@@ -4,9 +4,20 @@
 
 > ⚠️ **Not affiliated with or endorsed by Matt Pocock.** This is a community-built router for his MIT-licensed skill toolkit. All credit for the underlying skills goes to [@mattpocockuk](https://x.com/mattpocockuk) — check out [Total TypeScript](https://www.totaltypescript.com), [AI Hero](https://www.aihero.dev), and [mattpocock.com](https://www.mattpocock.com).
 
+## Works with
+
+| Agent | Invoke | Install dir | Docs |
+|---|---|---|---|
+| **Claude Code** | `/call-matt` | `.claude/skills/` or `~/.claude/skills/` | [below](#install) |
+| **Google Antigravity** | `/call-matt` workflow or implicit | `.agents/skills/` + `.agents/workflows/` | [antigravity/](./antigravity/) |
+| **OpenAI Codex** | `$call-matt` or implicit | `~/.codex/skills/` | [codex/](./codex/) |
+| **Hermes Agent** | by name or implicit | `~/.hermes/skills/` | [hermes/](./hermes/) |
+
+Same router, same routing logic, same three-part answer everywhere — only invocation and install differ.
+
 ## The problem
 
-Matt's toolkit has ~18 excellent skills — `/grill-with-docs`, `/tdd`, `/to-issues`, `/diagnose`, `/caveman` and more. They're small and composable by design. But that means *you* have to know which one fits your current situation.
+Matt's toolkit has 14+ excellent skills — `/grill-with-docs`, `/tdd`, `/to-issues`, `/diagnose`, `/caveman` and more. They're small and composable by design. But that means *you* have to know which one fits your current situation.
 
 ## The fix
 
@@ -57,8 +68,28 @@ npx skills@latest add KoukkuAi/call-matt
 | Lost in code | `/zoom-out` |
 | Bloated context | `/handoff` · `/caveman` |
 | New skill needed | `/write-a-skill` |
-| Git safety | `/git-guardrails-claude-code` |
-| Commit-time checks | `/setup-pre-commit` |
+
+## Repository structure
+
+```
+call-matt/
+├── src/SKILL.base.md        ← single source of truth
+├── scripts/build.py         ← generates all four ports below
+├── skills/call-matt/        ← Claude Code
+├── antigravity/             ← Google Antigravity (skill + workflow)
+├── codex/                   ← OpenAI Codex
+└── hermes/                  ← Hermes Agent
+```
+
+## Development
+
+Don't edit the generated `SKILL.md` files directly. Edit `src/SKILL.base.md` (shared content) or the per-agent config in `scripts/build.py`, then regenerate:
+
+```bash
+python3 scripts/build.py
+```
+
+The script validates every generated file (frontmatter, all 18 routed skills present, 12 routing rules, no agent leftovers) and fails loudly if anything is off.
 
 ## A note on identity
 
