@@ -4,6 +4,8 @@
 
 > ⚠️ **Not affiliated with or endorsed by Matt Pocock.** This is a community-built router for his MIT-licensed skill toolkit. All credit for the underlying skills goes to [@mattpocockuk](https://x.com/mattpocockuk) — check out [Total TypeScript](https://www.totaltypescript.com), [AI Hero](https://www.aihero.dev), and [mattpocock.com](https://www.mattpocock.com).
 
+![One router. Four agents.](./call-matt-multiagent.png)
+
 ## Works with
 
 | Agent | Invoke | Install dir | Docs |
